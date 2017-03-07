@@ -1,5 +1,5 @@
 if (typeof Vue != 'undefined') {
-    Vue.component('vue-data-table', {
+    Vue.component('v-data-table', {
         template: `<table>
     <caption>
       <slot name="caption">&nbsp;</slot>
