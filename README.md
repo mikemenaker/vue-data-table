@@ -17,7 +17,7 @@ Props:
 	 - Filter data for string
  - childHideable
 	 - Boolean
-	 - Are child rows hideable
+	 - Are child rows hideable (double click main row to open, double click child to close)
  - childInitHide
 	 - Boolean
 	 - If child rows are expandable, should they be hidden initially
@@ -30,3 +30,8 @@ Slots:
 	 - Any sub row of child detail data
  - column
 	 - Any template for a column
+	 
+	 
+Demo of these props/slots:
+
+https://jsfiddle.net/mikemenaker/hxjwhsdx/
