@@ -1,7 +1,18 @@
+[![GitHub release](https://img.shields.io/github/release/mikemenaker/v-data-table.svg)]() [![license](https://img.shields.io/github/license/mikemenaker/v-data-table.svg)]()
+
 # v-data-table
 Smart table using vue.js - sorting columns, filter by string, child rows, customs columns, custom row data
 
-Props:
+## Installation:
+
+
+``` html
+<script src="https://cdn.rawgit.com/mikemenaker/v-data-table/v1.0/src/v-data-table.js"></script>
+<!-- OR (TODO) -->
+<script src="https://cdn.rawgit.com/mikemenaker/v-data-table/v1.0/src/v-data-table.min.js"></script>
+```
+
+## Props:
 
  - data
 	 - Array
@@ -22,7 +33,7 @@ Props:
 	 - Boolean
 	 - If child rows are expandable, should they be hidden initially
 
-Slots:
+## Slots:
 
  - caption
 	 - Any caption that should be inserted before the header
@@ -32,10 +43,11 @@ Slots:
 	 - Any template for a column
 	 
 	 
-Demo of these props/slots:
+## Demo:
 
 https://jsfiddle.net/mikemenaker/hxjwhsdx/
 
+##  Examples
 Basic table:
 ```html
 <div id="demo">  
@@ -191,7 +203,7 @@ var demo = new Vue({
 })
 ```
 
-User template for a column (template name must match column name):
+Use template for a column (template name must match column name):
 ```html
 <div id="demo">  
   <v-data-table :data="gridData">    
@@ -228,38 +240,6 @@ var demo = new Vue({
     showPower(power) {
       alert(power);
     }
-  }
-})
-```
-
-Add a child row:
-```html
-<div id="demo">  
-  <v-data-table :data="gridData">   
-    <template slot="child" scope="props">
-      This is my child row: {{props.entry.name}}
-    </template>
-  </v-data-table>
-</div>
-```
-
-```javascript
-var demo = new Vue({
-  el: '#demo',
-  data: {        
-    gridData: [{
-      name: 'Chuck Norris',
-      power: Infinity
-    }, {
-      name: 'Bruce Lee',
-      power: 9000
-    }, {
-      name: 'Jackie Chan',
-      power: 7000
-    }, {
-      name: 'Jet Li',
-      power: 8000
-    }]
   }
 })
 ```
