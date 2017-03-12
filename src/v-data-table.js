@@ -1,6 +1,6 @@
 if (typeof Vue != 'undefined') {
-    Vue.component('v-data-table', {
-        template: `<table>
+    Vue.component('data-table', {
+        template: `<table v-if="$scopedSlots.child">
     <caption>
       <slot name="caption">&nbsp;</slot>
     </caption>
@@ -8,22 +8,47 @@ if (typeof Vue != 'undefined') {
       <tr>
         <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
           {{ key | getDisplayName(displayNames) }}
-          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+          <span v-if="colSortable(key)" class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
           </span>
         </th>
       </tr>
     </thead>
-    <tbody v-for="(entry, index) in filteredData">
-      <tr @dblclick="childShow.splice(index, 1, true)">
+    <tbody v-for="(entry, index) in filteredData" @dblclick="toggleChild(index)">
+      <tr>
         <td v-for="key in columns">
           <slot :name="key" :entry="entry">
             {{entry[key]}}
           </slot>
         </td>
       </tr>
-      <tr v-if="$scopedSlots.child && childShow[index]" @dblclick="toggleChild(index)">
-        <td :colspan="columns.length">
-          <slot name="child" :entry="entry"></slot>
+      <transition :name="childTransitionClass">
+          <tr v-if="$scopedSlots.child && childShow[index]">
+            <td :colspan="columns.length">
+              <slot name="child" :entry="entry"></slot>
+            </td>
+          </tr>
+      </transition>
+    </tbody>
+  </table>
+  <table v-else>
+    <caption>
+      <slot name="caption">&nbsp;</slot>
+    </caption>
+    <thead>
+      <tr>
+        <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
+          {{ key | getDisplayName(displayNames) }}
+          <span v-if="colSortable(key)" class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(entry, index) in filteredData">
+        <td v-for="key in columns">
+          <slot :name="key" :entry="entry">
+            {{entry[key]}}
+          </slot>
         </td>
       </tr>
     </tbody>
@@ -31,6 +56,18 @@ if (typeof Vue != 'undefined') {
         props: {
             data: Array,
             columnsToDisplay: {
+                type: Array,
+                default() {
+                    return [];
+                }
+            },
+            columnsToSort: {
+                type: Array,
+                default() {
+                    return [];
+                }
+            },
+            columnsToNotSort: {
                 type: Array,
                 default() {
                     return [];
@@ -53,6 +90,10 @@ if (typeof Vue != 'undefined') {
             childInitHide: {
                 type: Boolean,
                 default: false
+            },
+            childTransitionClass: {
+                type: String,
+                default: ""
             }
         },
         data() {
@@ -109,9 +150,13 @@ if (typeof Vue != 'undefined') {
         },
         methods: {
             sortBy(key) {
-                this.childShow = this.childShow.map(entry => !this.childInitHide);
-                this.sortKey = key;
-                this.sortOrders[key] = this.sortOrders[key] * -1
+                if (this.colSortable(key)) {
+                    if (this.childHideable) {
+                        this.childShow = this.childShow.map(entry => !this.childInitHide);
+                    }
+                    this.sortKey = key;
+                    this.sortOrders[key] = this.sortOrders[key] * -1
+                }
             },
 
             getColumns(columns, data) {
@@ -126,6 +171,16 @@ if (typeof Vue != 'undefined') {
                 if (this.childHideable) {
                     this.childShow[index] = !this.childShow[index];
                     this.childShow.splice(index, 1, this.childShow[index]);
+                }
+            },
+
+            colSortable(column) {
+                if(this.columnsToNotSort.length > 0) {
+                    return this.columnsToNotSort.indexOf(column) == -1;
+                } else if(this.columnsToSort.length > 0) {
+                    return this.columnsToSort.indexOf(column) != -1;
+                } else {
+                    return true;
                 }
             }
         }
