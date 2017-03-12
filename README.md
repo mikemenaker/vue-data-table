@@ -1,7 +1,12 @@
-[![GitHub release](https://img.shields.io/github/release/mikemenaker/v-data-table.svg)]() [![license](https://img.shields.io/github/license/mikemenaker/v-data-table.svg)]()
+[![GitHub release](https://img.shields.io/github/release/mikemenaker/vue-data-table.svg)]() [![license](https://img.shields.io/github/license/mikemenaker/vue-data-table.svg)]()
 
-# v-data-table
+# vue data-table
 Smart table using vue.js - sorting columns, filter by string, child rows, customs columns, custom row data
+
+
+## Demo:
+
+https://jsfiddle.net/mikemenaker/hxjwhsdx/
 
 ## Installation:
 
@@ -42,17 +47,47 @@ Smart table using vue.js - sorting columns, filter by string, child rows, custom
  - column
 	 - Any template for a column
 	 
-	 
-## Demo:
+## Styling:
+Selected columns have the class "active"
+Arrows are a span with class "arrow"
+Ascending/descending arrows also have class "asc"/"dsc"
 
-https://jsfiddle.net/mikemenaker/hxjwhsdx/
+```css
+th.active .arrow.asc {
+    border-bottom: 4px solid #4d4d4d;
+}
+
+th.active .arrow.dsc {
+    border-top: 4px solid #4d4d4d;
+}
+
+.arrow {
+    display: inline-block;
+    vertical-align: middle;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+}
+
+.arrow.asc {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid #cdc;
+}
+
+.arrow.dsc {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #cdc;
+}
+```
 
 ##  Examples
 Basic table:
 ```html
 <div id="demo">  
-  <v-data-table :data="gridData">    
-  </v-data-table>
+  <data-table :data="gridData">    
+  </data-table>
 </div>
 ```
 
@@ -80,8 +115,8 @@ var demo = new Vue({
 Only display certain columns:
 ```html
 <div id="demo">  
-  <v-data-table :data="gridData" :columns-to-display="gridColumns">    
-  </v-data-table>
+  <data-table :data="gridData" :columns-to-display="gridColumns">    
+  </data-table>
 </div>
 ```
 
@@ -114,8 +149,8 @@ Bind to search string:
     Search
     <input name="query" v-model="searchQuery">
   </form>
-  <v-data-table :data="gridData" :filter-key="searchQuery">    
-  </v-data-table>
+  <data-table :data="gridData" :filter-key="searchQuery">    
+  </data-table>
 </div>
 ```
 
@@ -144,8 +179,8 @@ var demo = new Vue({
 Map display names of columns:
 ```html
 <div id="demo">  
-  <v-data-table :data="gridData" :display-names="displayNames">    
-  </v-data-table>
+  <data-table :data="gridData" :display-names="displayNames">    
+  </data-table>
 </div>
 ```
 
@@ -176,9 +211,9 @@ var demo = new Vue({
 Add a caption:
 ```html
 <div id="demo">  
-  <v-data-table :data="gridData">   
+  <data-table :data="gridData">   
     <template slot="caption">This is my caption</template> 
-  </v-data-table>
+  </data-table>
 </div>
 ```
 
@@ -206,7 +241,7 @@ var demo = new Vue({
 Use template for a column (template name must match column name):
 ```html
 <div id="demo">  
-  <v-data-table :data="gridData">    
+  <data-table :data="gridData">    
     <template slot="name" scope="props">
       <b>{{props.entry.name}}</b>
       <br />
@@ -214,7 +249,7 @@ Use template for a column (template name must match column name):
         Show Power
       </button>
     </template>
-  </v-data-table>
+  </data-table>
 </div>
 ```
 
@@ -247,11 +282,11 @@ var demo = new Vue({
 Add a child row:
 ```html
 <div id="demo">  
-  <v-data-table :data="gridData">   
+  <data-table :data="gridData">   
     <template slot="child" scope="props">
       This is my child row: {{props.entry.name}}
     </template>
-  </v-data-table>
+  </data-table>
 </div>
 ```
 
@@ -279,11 +314,11 @@ var demo = new Vue({
 Add ability to toggle child row (double click main row to open, double click child to close):
 ```html
 <div id="demo">  
-  <v-data-table :data="gridData" :child-hideable="true">   
+  <data-table :data="gridData" :child-hideable="true">   
     <template slot="child" scope="props">
       This is my child row: {{props.entry.name}}
     </template>
-  </v-data-table>
+  </data-table>
 </div>
 ```
 
@@ -311,11 +346,11 @@ var demo = new Vue({
 Add ability to toggle child row (double click main row to open, double click child to close) and default to children rows closed:
 ```html
 <div id="demo">  
-  <v-data-table :data="gridData" :child-hideable="true" :child-init-hide="true">   
+  <data-table :data="gridData" :child-hideable="true" :child-init-hide="true">   
     <template slot="child" scope="props">
       This is my child row: {{props.entry.name}}
     </template>
-  </v-data-table>
+  </data-table>
 </div>
 ```
 
