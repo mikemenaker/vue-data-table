@@ -13,7 +13,7 @@ https://jsfiddle.net/mikemenaker/hxjwhsdx/
 
 ``` html
 <script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.1/src/v-data-table.js"></script>
-<!-- OR -->
+	<!-- OR -->
 <script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.1/src/v-data-table.min.js"></script>
 ```
 
@@ -33,7 +33,7 @@ https://jsfiddle.net/mikemenaker/hxjwhsdx/
 	 - Filter data for string
  - childHideable
 	 - Boolean
-	 - Are child rows hideable (double click main row to open, double click child to close)
+	 - Are child rows hideable (double click open/close)
  - childInitHide
 	 - Boolean
 	 - If child rows are expandable, should they be hidden initially
@@ -57,9 +57,9 @@ https://jsfiddle.net/mikemenaker/hxjwhsdx/
 	 - Any template for a column
 	 
 ## Styling:
-Selected columns have the class "active"
-Arrows are a span with class "arrow"
-Ascending/descending arrows also have class "asc"/"dsc"
+- Selected columns have the class "active"
+- Arrows are a span with class "arrow"
+- Ascending/descending arrows also have class "asc"/"dsc"
 
 ```css
 th.active .arrow.asc {
@@ -320,7 +320,7 @@ var demo = new Vue({
 })
 ```
 
-Add ability to toggle child row (double click main row to open, double click child to close):
+Add ability to toggle child row (double click to open/close):
 ```html
 <div id="demo">  
   <data-table :data="gridData" :child-hideable="true">   
