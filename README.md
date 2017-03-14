@@ -13,7 +13,7 @@ https://jsfiddle.net/mikemenaker/hxjwhsdx/
 
 ``` html
 <script src="https://cdn.rawgit.com/mikemenaker/v-data-table/v1.0/src/v-data-table.js"></script>
-<!-- OR (TODO) -->
+<!-- OR -->
 <script src="https://cdn.rawgit.com/mikemenaker/v-data-table/v1.0/src/v-data-table.min.js"></script>
 ```
 
@@ -37,6 +37,15 @@ https://jsfiddle.net/mikemenaker/hxjwhsdx/
  - childInitHide
 	 - Boolean
 	 - If child rows are expandable, should they be hidden initially
+ - columnsToSort
+	 - Array
+	 - What columns should be sortable (columnsToNotSort will take precedence if both are provided)
+ - columnsToNotSort
+	 - Array
+	 - What columns should not be sortable
+ - childTransitionClass
+	 - String
+	 - CSS class to use in transition	 
 
 ## Slots:
 
@@ -279,7 +288,7 @@ var demo = new Vue({
 })
 ```
 
-Add a child row:
+Add a child row, each section will be a tbody of 2 rows (data row, child row):
 ```html
 <div id="demo">  
   <data-table :data="gridData">   
