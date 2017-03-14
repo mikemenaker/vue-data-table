@@ -12,9 +12,9 @@ https://jsfiddle.net/mikemenaker/hxjwhsdx/
 
 
 ``` html
-<script src="https://cdn.rawgit.com/mikemenaker/v-data-table/v1.0/src/v-data-table.js"></script>
+<script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.1/src/v-data-table.js"></script>
 <!-- OR -->
-<script src="https://cdn.rawgit.com/mikemenaker/v-data-table/v1.0/src/v-data-table.min.js"></script>
+<script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.1/src/v-data-table.min.js"></script>
 ```
 
 ## Props:
