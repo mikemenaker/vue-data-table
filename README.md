@@ -6,7 +6,7 @@ Smart table using vue.js - sorting columns, filter by string, child rows, custom
 
 ## Demo:
 
-https://jsfiddle.net/mikemenaker/hxjwhsdx/
+https://jsfiddle.net/mikemenaker/zuyvwvms/
 
 ## Installation:
 
