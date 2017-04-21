@@ -73,6 +73,10 @@ if (typeof Vue != 'undefined') {
                     return [];
                 }
             },
+            aggregateColumns: {
+                type: Boolean,
+                default: false
+            },
             displayNames: {
                 type: Object,
                 default() {
@@ -160,8 +164,14 @@ if (typeof Vue != 'undefined') {
             },
 
             getColumns(columns, data) {
-                if (columns.length == 0) {
-                    return Object.keys(data[0]);
+                if (columns.length === 0) {
+                    if (this.aggregateColumns) {
+                        let allColumns = [];
+                        data.forEach(entry => allColumns = allColumns.concat(Object.keys(entry)));
+                        return allColumns.filter((item, pos) => allColumns.indexOf(item) == pos);
+                    } else {
+                        return Object.keys(data[0]);
+                    }
                 } else {
                     return columns;
                 }
@@ -175,9 +185,9 @@ if (typeof Vue != 'undefined') {
             },
 
             colSortable(column) {
-                if(this.columnsToNotSort.length > 0) {
+                if (this.columnsToNotSort.length > 0) {
                     return this.columnsToNotSort.indexOf(column) == -1;
-                } else if(this.columnsToSort.length > 0) {
+                } else if (this.columnsToSort.length > 0) {
                     return this.columnsToSort.indexOf(column) != -1;
                 } else {
                     return true;
