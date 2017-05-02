@@ -1,58 +1,63 @@
-if (typeof Vue != 'undefined') {
-    Vue.component('data-table', {
-        template: `<table v-if="$scopedSlots.child">
-    <caption>
-      <slot name="caption">&nbsp;</slot>
-    </caption>
-    <thead>
-      <tr>
-        <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
-          {{ key | getDisplayName(displayNames) }}
+<template>
+    <table v-if="$scopedSlots.child">
+        <caption>
+            <slot name="caption">&nbsp;</slot>
+        </caption>
+        <thead>
+        <tr>
+            <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
+                {{ key | getDisplayName(displayNames) }}
           <span v-if="colSortable(key)" class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
           </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody v-for="(entry, index) in filteredData" @dblclick="toggleChild(index)">
-      <tr>
-        <td v-for="key in columns">
-          <slot :name="key" :entry="entry">
-            {{entry[key]}}
-          </slot>
-        </td>
-      </tr>
-      <transition :name="childTransitionClass">
-          <tr v-if="$scopedSlots.child && childShow[index]">
-            <td :colspan="columns.length">
-              <slot name="child" :entry="entry"></slot>
+            </th>
+        </tr>
+        </thead>
+        <tbody v-for="(entry, index) in filteredData" @dblclick="toggleChild(index)">
+        <tr>
+            <td v-for="key in columns">
+                <slot :name="key" :entry="entry">
+                    {{entry[key]}}
+
+                </slot>
             </td>
-          </tr>
-      </transition>
-    </tbody>
-  </table>
-  <table v-else>
-    <caption>
-      <slot name="caption">&nbsp;</slot>
-    </caption>
-    <thead>
-      <tr>
-        <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
-          {{ key | getDisplayName(displayNames) }}
+        </tr>
+        <transition :name="childTransitionClass">
+            <tr v-if="$scopedSlots.child && childShow[index]">
+                <td :colspan="columns.length">
+                    <slot name="child" :entry="entry"></slot>
+                </td>
+            </tr>
+        </transition>
+        </tbody>
+    </table>
+    <table v-else>
+        <caption>
+            <slot name="caption">&nbsp;</slot>
+        </caption>
+        <thead>
+        <tr>
+            <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
+                {{ key | getDisplayName(displayNames) }}
           <span v-if="colSortable(key)" class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
           </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(entry, index) in filteredData">
-        <td v-for="key in columns">
-          <slot :name="key" :entry="entry">
-            {{entry[key]}}
-          </slot>
-        </td>
-      </tr>
-    </tbody>
-  </table>`,
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(entry, index) in filteredData">
+            <td v-for="key in columns">
+                <slot :name="key" :entry="entry">
+                    {{entry[key]}}
+
+                </slot>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</template>
+<script>
+    export default {
+        name: 'data-table',
         props: {
             data: Array,
             columnsToDisplay: {
@@ -169,7 +174,7 @@ if (typeof Vue != 'undefined') {
                 }
             },
 
-            getColumns(columns, data, columnsToRemove) {
+            getColumns(columns, data) {
                 if (columns.length === 0) {
                     let foundColumns;
                     if (this.aggregateColumns) {
@@ -212,5 +217,8 @@ if (typeof Vue != 'undefined') {
                 }
             }
         }
-    });
-}
+    }
+</script>
+
+<style>
+</style>
