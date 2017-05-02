@@ -25,6 +25,12 @@ https://jsfiddle.net/mikemenaker/zuyvwvms/
  - columnsToDisplay
 	 - Array
 	 - Which columns to display in table
+ - columnsToNotDisplay
+	 - Array
+	 - Which columns to not display in table (cannot be used with columnsToDisplay)
+ - aggregateColumns
+	 - Boolean
+	 - Walk all objects instead of just first to get list of columns (cannot be used with columnsToDisplay)
  - displayNames
 	 - Object
 	 - Mapping of column name -> display name
