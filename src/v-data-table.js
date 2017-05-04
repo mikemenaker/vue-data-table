@@ -1,6 +1,26 @@
 if (typeof Vue != 'undefined') {
     Vue.component('data-table', {
-        template: `<table v-if="$scopedSlots.child">
+        template: `<table v-if="filteredData.length == 0">
+    <caption>
+      <slot name="caption">&nbsp;</slot>
+    </caption>
+    <thead>
+      <tr>
+        <th v-for="key in columns">
+          {{ key | getDisplayName(displayNames) }}          
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td :colspan="columns.length">
+          <slot name="nodata">            
+          </slot>
+        </td>
+      </tr>
+    </tbody>
+  </table>                              
+  <table v-else-if="$scopedSlots.child">
     <caption>
       <slot name="caption">&nbsp;</slot>
     </caption>

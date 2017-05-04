@@ -1,5 +1,26 @@
 <template>
-    <table v-if="$scopedSlots.child">
+    <table v-if="filteredData.length == 0">
+        <caption>
+            <slot name="caption">&nbsp;</slot>
+        </caption>
+        <thead>
+        <tr>
+            <th v-for="key in columns">
+                {{ key | getDisplayName(displayNames) }}
+
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td :colspan="columns.length">
+                <slot name="nodata">
+                </slot>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table v-else-if="$scopedSlots.child">
         <caption>
             <slot name="caption">&nbsp;</slot>
         </caption>
@@ -17,7 +38,6 @@
             <td v-for="key in columns">
                 <slot :name="key" :entry="entry">
                     {{entry[key]}}
-
                 </slot>
             </td>
         </tr>
@@ -48,7 +68,6 @@
             <td v-for="key in columns">
                 <slot :name="key" :entry="entry">
                     {{entry[key]}}
-
                 </slot>
             </td>
         </tr>
