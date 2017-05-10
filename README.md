@@ -12,9 +12,9 @@ https://jsfiddle.net/mikemenaker/zuyvwvms/
 
 
 ``` html
-<script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.1/src/v-data-table.js"></script>
+<script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.2/src/v-data-table.js"></script>
 	<!-- OR -->
-<script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.1/src/v-data-table.min.js"></script>
+<script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.2/src/v-data-table.min.js"></script>
 ```
 
 ## Props:
@@ -30,7 +30,7 @@ https://jsfiddle.net/mikemenaker/zuyvwvms/
 	 - Which columns to not display in table (cannot be used with columnsToDisplay)
  - aggregateColumns
 	 - Boolean
-	 - Walk all objects instead of just first to get list of columns (cannot be used with columnsToDisplay)
+	 - Walk all objects instead of just first object to get list of columns (cannot be used with columnsToDisplay)
  - displayNames
 	 - Object
 	 - Mapping of column name -> display name
@@ -61,6 +61,8 @@ https://jsfiddle.net/mikemenaker/zuyvwvms/
 	 - Any sub row of child detail data
  - column
 	 - Any template for a column
+ - nodata
+	 - Slot to display if the data provided is empty	 
 	 
 ## Styling:
 - Selected columns have the class "active"
