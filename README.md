@@ -17,6 +17,8 @@ https://jsfiddle.net/mikemenaker/zuyvwvms/
 <script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.2/src/v-data-table.min.js"></script>
 ```
 
+You can also add the .vue file to your project.
+
 ## Props:
 
  - data
