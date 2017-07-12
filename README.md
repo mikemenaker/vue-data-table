@@ -24,6 +24,8 @@ You can also add the .vue file to your project.
  - data
 	 - Array
 	 - Data to create table from
+	 - Needs to be object based (no primitives like strings, numerical, boolean)
+	 - Array change detection needs to adhere to: https://vuejs.org/v2/guide/list.html#Array-Change-Detection
  - columnsToDisplay
 	 - Array
 	 - Which columns to display in table
