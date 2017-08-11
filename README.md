@@ -3,6 +3,7 @@
 # vue data-table
 Smart table using vue.js - sorting columns, filter by string, child rows, customs columns, custom row data
 
+![Alt text](https://ibin.co/3WXQDL4I3P29.gif "Data Table")
 
 ## Demo:
 
