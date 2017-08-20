@@ -9,16 +9,38 @@ Smart table using vue.js - sorting columns, filter by string, child rows, custom
 
 https://jsfiddle.net/mikemenaker/zuyvwvms/
 
-## Installation:
-
-
-``` html
-<script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.3/src/v-data-table.js"></script>
-	<!-- OR -->
-<script src="https://cdn.rawgit.com/mikemenaker/vue-data-table/1.0.3/src/v-data-table.min.js"></script>
+## Installation
+### With npm:
+```bash
+npm i v-data-table --save
 ```
 
-You can also add the .vue file to your project.
+### With a CDN:
+```html
+<!-- In <head> -->
+<meta rel="stylesheet" href="https://unpkg.com/v-data-table/dist/v-data-table.css">
+<!-- In <body>, after Vue import -->
+<script src="https://unpkg.com/v-data-table/dist/v-data-table.js"></script>
+```
+
+## Usage
+### With an ES6 bundler (via npm)
+In your index file
+```js
+import DataTable from 'v-data-table'
+Vue.use(DataTable)
+```
+
+### With a CDN
+```html
+<script>
+    Vue.use(DataTable)
+
+    new Vue({
+        // ...
+    })
+</script>
+```
 
 ## Props:
 
