@@ -193,7 +193,7 @@
                 }
             },
 
-            getColumns(columns, data) {
+            getColumns(columns, data, columnsToRemove) {
                 if (columns.length === 0) {
                     let foundColumns;
                     if (this.aggregateColumns) {
