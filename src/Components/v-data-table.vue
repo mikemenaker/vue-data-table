@@ -1,5 +1,5 @@
 <template>
-    <table v-if="filteredData.length == 0">
+    <table v-if="paginatedData.length == 0">
         <caption>
             <slot name="caption">&nbsp;</slot>
         </caption>
@@ -33,7 +33,7 @@
             </th>
         </tr>
         </thead>
-        <tbody v-for="(entry, index) in filteredData" @dblclick="toggleChild(index)">
+        <tbody v-for="(entry, index) in paginatedData" @dblclick="toggleChild(index)">
         <tr>
             <td v-for="key in columns">
                 <slot :name="key" :entry="entry">
@@ -49,6 +49,11 @@
             </tr>
         </transition>
         </tbody>
+        <tfoot v-if="itemsPerPage != -1 && this.filteredData.length > this.itemsPerPage">
+            {{ currentPage * itemsPerPage - itemsPerPage + 1 }} - {{ Math.min(currentPage * itemsPerPage,  filteredData.length) }} of {{ filteredData.length }}
+            <span class="previousPage" @click="previousPage"></span> &nbsp;
+            <span class="nextPage" @click="nextPage"></span>
+        </tfoot>
     </table>
     <table v-else>
         <caption>
@@ -64,7 +69,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(entry, index) in filteredData">
+        <tr v-for="(entry, index) in paginatedData">
             <td v-for="key in columns">
                 <slot :name="key" :entry="entry">
                     {{entry[key]}}
@@ -72,6 +77,11 @@
             </td>
         </tr>
         </tbody>
+        <tfoot v-if="itemsPerPage != -1 && this.filteredData.length > this.itemsPerPage">
+            {{ currentPage * itemsPerPage - itemsPerPage + 1 }} - {{ Math.min(currentPage * itemsPerPage,  filteredData.length) }} of {{ filteredData.length }}
+            <span class="previousPage" @click="previousPage"></span> &nbsp;
+            <span class="nextPage" @click="nextPage"></span>
+        </tfoot>
     </table>
 </template>
 <script>
@@ -128,6 +138,10 @@
             childTransitionClass: {
                 type: String,
                 default: ""
+            },
+            itemsPerPage: {
+                type: Number,
+                default: -1
             }
         },
         data() {
@@ -144,7 +158,8 @@
             return {
                 sortKey: '',
                 sortOrders: sortOrders,
-                childShow: childShow
+                childShow: childShow,
+                currentPage: 1
             }
         },
         computed: {
@@ -167,10 +182,26 @@
                         return (a === b ? 0 : a > b ? 1 : -1) * order
                     })
                 }
+
                 return data
             },
             columns() {
                 return this.getColumns(this.columnsToDisplay, this.data, this.columnsToNotDisplay);
+            },
+            totalPages() {
+                if (this.itemsPerPage != -1) {
+                    return Math.ceil(this.filteredData.length / this.itemsPerPage);
+                } else {
+                    return 1;
+                }
+            },
+            paginatedData() {
+                if (this.itemsPerPage != -1 && this.filteredData.length > this.itemsPerPage) {
+                    const index = this.currentPage * this.itemsPerPage - this.itemsPerPage;
+                    return this.filteredData.slice(index, index + this.itemsPerPage);
+                } else {
+                    return this.filteredData;
+                }
             }
         },
         filters: {
@@ -234,7 +265,20 @@
                 } else {
                     return true;
                 }
+            },
+
+            nextPage() {
+                if (this.currentPage != this.totalPages) {
+                    this.currentPage++;
+                }
+            },
+
+            previousPage() {
+                if (this.currentPage != 1) {
+                    this.currentPage--;
+                }
             }
+
         }
     }
 </script>

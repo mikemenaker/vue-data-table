@@ -1,7 +1,7 @@
 {
   "name": "v-data-table",
   "description": "Vue.js 2.0 data table",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "main": "dist-module/main.js",
   "scripts": {
     "prepublish": "npm run build && npm run browser-build",
@@ -30,7 +30,6 @@
   },
   "homepage": "https://github.com/mikemenaker/vue-data-table#readme",
   "dependencies": {
-    "font-awesome": "^4.7.0",
     "vue": "^2.3.3"
   },
   "devDependencies": {
