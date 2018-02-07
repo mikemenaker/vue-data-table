@@ -78,19 +78,22 @@ Vue.use(DataTable)
 	 - What columns should not be sortable
  - childTransitionClass
 	 - String
-	 - CSS class to use in transition	 
+	 - CSS class to use in transition
+ - itemsPerPage
+	 - Numbers
+	 - Enables pagination
 
 ## Slots:
 
  - caption
 	 - Any caption that should be inserted before the header
- - child 
+ - child
 	 - Any sub row of child detail data
  - column
 	 - Any template for a column
  - nodata
-	 - Slot to display if the data provided is empty	 
-	 
+	 - Slot to display if the data provided is empty
+
 ## Styling:
 - Selected columns have the class "active"
 - Arrows are a span with class "arrow"
@@ -126,11 +129,57 @@ th.active .arrow.dsc {
 }
 ```
 
+or with Font Awesome
+
+```css
+.arrow.asc {
+  position: relative;
+}
+.arrow.asc:before {
+  content: "\f062";
+  font-family: FontAwesome;
+  position: absolute;
+  left: -5px;
+}
+
+.arrow.dsc {
+  position: relative;
+}
+.arrow.dsc:before {
+  content: "\f063";
+  font-family: FontAwesome;
+  position: absolute;
+  left: -5px;
+}
+```
+
+-For pagination next page/previous page spans will have class "nextPage"/"previousPage"
+```css
+.previousPage {
+  position: relative;
+}
+.previousPage:before {
+  content: "\f104";
+  font-family: FontAwesome;
+  position: absolute;
+}
+
+.nextPage {
+  position: relative;
+}
+.nextPage:before {
+  content: "\f105";
+  font-family: FontAwesome;
+  position: absolute;
+  left: 5px;
+}
+```
+
 ##  Examples
 Basic table:
 ```html
-<div id="demo">  
-  <data-table :data="gridData">    
+<div id="demo">
+  <data-table :data="gridData">
   </data-table>
 </div>
 ```
@@ -138,7 +187,7 @@ Basic table:
 ```javascript
 var demo = new Vue({
   el: '#demo',
-  data: {        
+  data: {
     gridData: [{
       name: 'Chuck Norris',
       power: Infinity
@@ -158,8 +207,8 @@ var demo = new Vue({
 
 Only display certain columns:
 ```html
-<div id="demo">  
-  <data-table :data="gridData" :columns-to-display="gridColumns">    
+<div id="demo">
+  <data-table :data="gridData" :columns-to-display="gridColumns">
   </data-table>
 </div>
 ```
@@ -167,7 +216,7 @@ Only display certain columns:
 ```javascript
 var demo = new Vue({
   el: '#demo',
-  data: {       
+  data: {
     gridColumns: ['name', 'power'],
     gridData: [{
       name: 'Chuck Norris',
@@ -188,12 +237,12 @@ var demo = new Vue({
 
 Bind to search string:
 ```html
-<div id="demo">  
+<div id="demo">
   <form id="search">
     Search
     <input name="query" v-model="searchQuery">
   </form>
-  <data-table :data="gridData" :filter-key="searchQuery">    
+  <data-table :data="gridData" :filter-key="searchQuery">
   </data-table>
 </div>
 ```
@@ -201,7 +250,7 @@ Bind to search string:
 ```javascript
 var demo = new Vue({
   el: '#demo',
-  data: {   
+  data: {
     searchQuery: '',
     gridData: [{
       name: 'Chuck Norris',
@@ -222,8 +271,8 @@ var demo = new Vue({
 
 Map display names of columns:
 ```html
-<div id="demo">  
-  <data-table :data="gridData" :display-names="displayNames">    
+<div id="demo">
+  <data-table :data="gridData" :display-names="displayNames">
   </data-table>
 </div>
 ```
@@ -231,7 +280,7 @@ Map display names of columns:
 ```javascript
 var demo = new Vue({
   el: '#demo',
-  data: {      
+  data: {
   displayNames: {
       'power': 'Super Powers'
     },
@@ -254,9 +303,9 @@ var demo = new Vue({
 
 Add a caption:
 ```html
-<div id="demo">  
-  <data-table :data="gridData">   
-    <template slot="caption">This is my caption</template> 
+<div id="demo">
+  <data-table :data="gridData">
+    <template slot="caption">This is my caption</template>
   </data-table>
 </div>
 ```
@@ -264,7 +313,7 @@ Add a caption:
 ```javascript
 var demo = new Vue({
   el: '#demo',
-  data: {        
+  data: {
     gridData: [{
       name: 'Chuck Norris',
       power: Infinity
@@ -284,8 +333,8 @@ var demo = new Vue({
 
 Use template for a column (template name must match column name):
 ```html
-<div id="demo">  
-  <data-table :data="gridData">    
+<div id="demo">
+  <data-table :data="gridData">
     <template slot="name" scope="props">
       <b>{{props.entry.name}}</b>
       <br />
@@ -300,7 +349,7 @@ Use template for a column (template name must match column name):
 ```javascript
 var demo = new Vue({
   el: '#demo',
-  data: {        
+  data: {
     gridData: [{
       name: 'Chuck Norris',
       power: Infinity
@@ -325,8 +374,8 @@ var demo = new Vue({
 
 Add a child row, each section will be a tbody of 2 rows (data row, child row):
 ```html
-<div id="demo">  
-  <data-table :data="gridData">   
+<div id="demo">
+  <data-table :data="gridData">
     <template slot="child" scope="props">
       This is my child row: {{props.entry.name}}
     </template>
@@ -337,7 +386,7 @@ Add a child row, each section will be a tbody of 2 rows (data row, child row):
 ```javascript
 var demo = new Vue({
   el: '#demo',
-  data: {        
+  data: {
     gridData: [{
       name: 'Chuck Norris',
       power: Infinity
@@ -357,8 +406,8 @@ var demo = new Vue({
 
 Add ability to toggle child row (double click to open/close):
 ```html
-<div id="demo">  
-  <data-table :data="gridData" :child-hideable="true">   
+<div id="demo">
+  <data-table :data="gridData" :child-hideable="true">
     <template slot="child" scope="props">
       This is my child row: {{props.entry.name}}
     </template>
@@ -369,7 +418,7 @@ Add ability to toggle child row (double click to open/close):
 ```javascript
 var demo = new Vue({
   el: '#demo',
-  data: {        
+  data: {
     gridData: [{
       name: 'Chuck Norris',
       power: Infinity
@@ -389,8 +438,8 @@ var demo = new Vue({
 
 Add ability to toggle child row (double click main row to open, double click child to close) and default to children rows closed:
 ```html
-<div id="demo">  
-  <data-table :data="gridData" :child-hideable="true" :child-init-hide="true">   
+<div id="demo">
+  <data-table :data="gridData" :child-hideable="true" :child-init-hide="true">
     <template slot="child" scope="props">
       This is my child row: {{props.entry.name}}
     </template>
@@ -401,7 +450,7 @@ Add ability to toggle child row (double click main row to open, double click chi
 ```javascript
 var demo = new Vue({
   el: '#demo',
-  data: {        
+  data: {
     gridData: [{
       name: 'Chuck Norris',
       power: Infinity
